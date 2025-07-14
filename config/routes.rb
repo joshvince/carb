@@ -12,6 +12,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root "question#intro"
-  get "contenders", to: "question#contenders"
+  root "question#ask"
 end
