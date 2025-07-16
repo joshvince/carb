@@ -373,10 +373,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add tap-to-drop event listeners to drop zones
     dropZones.forEach((zone) => {
       zone.addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (selectedEmoji) {
+          e.preventDefault();
+          e.stopPropagation();
+
           const targetSlot = this.querySelector('.emoji-slot');
           const isEmpty = targetSlot.textContent === '○';
 
@@ -385,19 +385,24 @@ document.addEventListener('DOMContentLoaded', function () {
             clearEmojiSelection();
           }
         }
+        // If no emoji is selected, allow default scroll behavior
       });
     });
 
     // Add click outside to unselect
-    document.addEventListener('touchstart', function (e) {
-      const isEmojiItem = e.target.closest('.emoji-item');
-      const isDropZone = e.target.closest('.drop-zone');
-      const isClearButton = e.target.closest('.clear-button');
+    document.addEventListener(
+      'touchstart',
+      function (e) {
+        const isEmojiItem = e.target.closest('.emoji-item');
+        const isDropZone = e.target.closest('.drop-zone');
+        const isClearButton = e.target.closest('.clear-button');
 
-      if (!isEmojiItem && !isDropZone && !isClearButton && selectedEmoji) {
-        clearEmojiSelection();
-      }
-    });
+        if (!isEmojiItem && !isDropZone && !isClearButton && selectedEmoji) {
+          clearEmojiSelection();
+        }
+      },
+      { passive: true }
+    );
   }
 
   function addClearButton(zone) {
@@ -607,4 +612,109 @@ document.addEventListener('DOMContentLoaded', function () {
     updateFormData();
     answerForm.submit();
   });
+
+  // Clear all button functionality
+  const clearAllButton = document.getElementById('clear-all-button');
+  if (clearAllButton) {
+    clearAllButton.addEventListener('click', function () {
+      clearAllSelections();
+    });
+  }
+
+  function clearAllSelections() {
+    // Clear emoji selection
+    clearEmojiSelection();
+
+    // Clear all drop zones
+    dropZones.forEach((zone) => {
+      const targetSlot = zone.querySelector('.emoji-slot');
+      const targetNameSlot = zone.querySelector('.name-slot');
+      const clearButton = zone.querySelector('.clear-button');
+
+      // Reset the drop zone
+      targetSlot.textContent = '○';
+      targetSlot.classList.remove('text-black');
+      targetSlot.classList.add('text-amber-200');
+      targetSlot.removeAttribute('draggable');
+      targetSlot.classList.remove('cursor-grab', 'active:cursor-grabbing');
+
+      // Clear name slot
+      targetNameSlot.textContent = '';
+
+      // Remove ranking background
+      removeRankingBackground(zone);
+
+      // Remove clear button
+      if (clearButton) {
+        clearButton.remove();
+      }
+    });
+
+    // Return all emojis to source
+    const sourceArea = document.getElementById('emoji-source');
+    const existingEmojis = sourceArea.querySelectorAll('.emoji-item');
+    const expectedEmojis = ['🍞', '🍜', '🍝', '🥔', '🍚'];
+
+    // Remove existing emojis
+    existingEmojis.forEach((emoji) => {
+      emoji.remove();
+    });
+
+    // Add all emojis back to source
+    expectedEmojis.forEach((emoji) => {
+      const newEmojiItem = document.createElement('div');
+      newEmojiItem.className =
+        'emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation';
+      newEmojiItem.setAttribute('draggable', 'true');
+      newEmojiItem.setAttribute('data-emoji', emoji);
+      newEmojiItem.textContent = emoji;
+
+      if (isTouchDevice) {
+        // Add tap-to-select event listener for mobile
+        newEmojiItem.addEventListener('touchstart', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const emoji = this.getAttribute('data-emoji');
+
+          // Clear previous selection
+          if (selectedEmoji && selectedEmoji !== emoji) {
+            clearEmojiSelection();
+          }
+
+          // Select this emoji
+          selectedEmoji = emoji;
+          this.style.transform = 'scale(1.2)';
+          this.style.opacity = '0.7';
+          this.style.border = '3px solid #f59e0b';
+          this.style.borderRadius = '8px';
+
+          // Show visual feedback
+          showEmojiSelectedFeedback(emoji);
+        });
+      } else {
+        // Add drag events for desktop
+        newEmojiItem.addEventListener('dragstart', function (e) {
+          draggedElement = this;
+          draggedEmoji = this.getAttribute('data-emoji');
+          this.style.opacity = '0.5';
+          e.dataTransfer.effectAllowed = 'move';
+        });
+
+        newEmojiItem.addEventListener('dragend', function () {
+          this.style.opacity = '1';
+          draggedElement = null;
+          draggedEmoji = null;
+        });
+      }
+
+      sourceArea.appendChild(newEmojiItem);
+    });
+
+    // Update form data
+    updateFormData();
+
+    // Check completion status
+    checkCompletion();
+  }
 });

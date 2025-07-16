@@ -1,4 +1,4 @@
-<div class="sticky top-0 z-30 bg-gradient-to-b from-yellow-50/60 via-yellow-50/40 to-transparent backdrop-blur-sm pb-8 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+<div class="sticky top-0 z-30 bg-gradient-to-b to-yellow-50/60 via-yellow-50/40 from-transparent backdrop-blur-sm pb-8 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]" style="pointer-events: none;">
   <div class="flex flex-col gap-y-2 px-6 py-4">
     <h1 class="text-5xl text-amber-900 font-black">The Question</h1>
     <div class="text-xl text-amber-600 font-black">Rate these carbs from best to worst</div>
@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="flex flex-col items-center w-full max-w-4xl mx-auto p-6">
+<div class="flex flex-col items-center w-full max-w-4xl mx-auto p-6 select-none">
   <!-- Drag and Drop Container -->
   <div class="w-full">
 
@@ -52,6 +52,11 @@
             <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
             <div class="name-slot text-2xl font-black text-amber-800"></div>
           </div>
+        </div>
+        <div class=" flex items-center justify-end">
+          <button id="clear-all-button" class="px-4 py-2 text-rose-500 text-sm hover:text-rose-800 transition-colors duration-200">
+            Clear all
+          </button>
         </div>
       </div>
     </div>
