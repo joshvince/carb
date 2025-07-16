@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const emojiItems = document.querySelectorAll('.emoji-item');
   const dropZones = document.querySelectorAll('.drop-zone');
   const submitButton = document.getElementById('submit-answer');
-  const answerForm = document.getElementById('answer-form');
 
   let draggedElement = null;
   let draggedEmoji = null;
@@ -41,12 +40,18 @@ document.addEventListener('DOMContentLoaded', function () {
         draggedEmoji = this.getAttribute('data-emoji');
         this.style.opacity = '0.5';
         e.dataTransfer.effectAllowed = 'move';
+
+        // Show affordance text on empty drop zones
+        showAffordanceText();
       });
 
       item.addEventListener('dragend', function () {
         this.style.opacity = '1';
         draggedElement = null;
         draggedEmoji = null;
+
+        // Hide affordance text
+        hideAffordanceText();
       });
     });
 
@@ -107,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Check if all positions are filled
             checkCompletion();
+
+            // Hide affordance text after successful drop
+            hideAffordanceText();
           }
         }
       });
@@ -147,41 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
       floatingElement.remove();
       floatingElement = null;
     }
-  }
-
-  function highlightDropZones(x, y) {
-    dropZones.forEach((zone) => {
-      const rect = zone.getBoundingClientRect();
-      const targetSlot = zone.querySelector('.emoji-slot');
-      const isEmpty = targetSlot.textContent === '○';
-
-      // Add padding for more forgiving touch detection
-      const padding = 20;
-
-      // On mobile, skip drop zones that are disabled (underneath sticky header)
-      if (isTouchDevice && zone.style.pointerEvents === 'none') {
-        zone.classList.remove('border-amber-500', 'bg-amber-100');
-        return;
-      }
-
-      if (
-        x >= rect.left - padding &&
-        x <= rect.right + padding &&
-        y >= rect.top - padding &&
-        y <= rect.bottom + padding &&
-        isEmpty
-      ) {
-        zone.classList.add('border-amber-500', 'bg-amber-100');
-      } else {
-        zone.classList.remove('border-amber-500', 'bg-amber-100');
-      }
-    });
-  }
-
-  function clearDropZoneHighlights() {
-    dropZones.forEach((zone) => {
-      zone.classList.remove('border-amber-500', 'bg-amber-100');
-    });
   }
 
   function setupDropZoneIntersectionObserver() {
@@ -233,7 +206,45 @@ document.addEventListener('DOMContentLoaded', function () {
         item.style.borderRadius = '';
       });
       selectedEmoji = null;
+
+      // Hide affordance text on mobile
+      if (isTouchDevice) {
+        hideAffordanceText();
+      }
     }
+  }
+
+  function showAffordanceText() {
+    dropZones.forEach((zone) => {
+      const targetSlot = zone.querySelector('.emoji-slot');
+      const affordanceText = zone.querySelector('.affordance-text');
+      const isEmpty = targetSlot.textContent === '○';
+
+      if (isEmpty && affordanceText) {
+        // Set appropriate text based on device type
+        if (isTouchDevice) {
+          affordanceText.textContent =
+            affordanceText.getAttribute('data-mobile-text');
+        } else {
+          affordanceText.textContent =
+            affordanceText.getAttribute('data-desktop-text');
+        }
+        // Add transition for smooth fade-in
+        affordanceText.style.transition = 'opacity 0.2s ease-in';
+        affordanceText.style.opacity = '1';
+      }
+    });
+  }
+
+  function hideAffordanceText() {
+    dropZones.forEach((zone) => {
+      const affordanceText = zone.querySelector('.affordance-text');
+      if (affordanceText) {
+        // Remove transition for instant hide
+        affordanceText.style.transition = 'none';
+        affordanceText.style.opacity = '0';
+      }
+    });
   }
 
   function showEmojiSelectedFeedback(emoji) {
@@ -246,6 +257,11 @@ document.addEventListener('DOMContentLoaded', function () {
         zone.classList.add('border-amber-500', 'bg-amber-100');
       }
     });
+
+    // Show affordance text on mobile
+    if (isTouchDevice) {
+      showAffordanceText();
+    }
   }
 
   function handleMobileDrop(zone, emoji) {
@@ -278,70 +294,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if all positions are filled
     checkCompletion();
 
-    // Clear drop zone highlights
+    // Clear drop zone highlights and hide affordance text
     dropZones.forEach((zone) => {
       zone.classList.remove('border-amber-500', 'bg-amber-100');
     });
-  }
-
-  function findDropZoneAtPosition(x, y) {
-    for (let zone of dropZones) {
-      const rect = zone.getBoundingClientRect();
-
-      // Add padding for more forgiving touch detection
-      const padding = 20;
-
-      // On mobile, skip drop zones that are disabled (underneath sticky header)
-      if (isTouchDevice && zone.style.pointerEvents === 'none') {
-        continue;
-      }
-
-      if (
-        x >= rect.left - padding &&
-        x <= rect.right + padding &&
-        y >= rect.top - padding &&
-        y <= rect.bottom + padding
-      ) {
-        return zone;
-      }
-    }
-    return null;
-  }
-
-  function handleTouchDrop(targetZone, emoji) {
-    const targetSlot = targetZone.querySelector('.emoji-slot');
-    const targetNameSlot = targetZone.querySelector('.name-slot');
-    const targetOccupied = targetSlot.textContent !== '○';
-
-    // Only allow dropping if the target is empty
-    if (!targetOccupied) {
-      const targetPosition = parseInt(targetZone.getAttribute('data-position'));
-
-      // Place the emoji
-      targetSlot.textContent = emoji;
-      targetSlot.classList.remove('text-amber-200');
-      targetSlot.classList.add('text-black');
-      targetSlot.setAttribute('draggable', 'false'); // Disable dragging once placed
-      targetSlot.classList.remove('cursor-grab', 'active:cursor-grabbing');
-
-      // Update name slot
-      targetNameSlot.textContent = emojiNames[emoji] || '';
-
-      // Apply ranking background color
-      applyRankingBackground(targetZone, targetPosition);
-
-      // Add clear button
-      addClearButton(targetZone);
-
-      // Remove from source
-      removeEmojiFromSource(emoji);
-
-      // Update form data
-      updateFormData();
-
-      // Check if all positions are filled
-      checkCompletion();
-    }
+    hideAffordanceText();
   }
 
   function initMobileTouchImplementation() {
@@ -470,6 +427,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Clear any emoji selection
       clearEmojiSelection();
+
+      // Hide affordance text
+      hideAffordanceText();
     }
   }
 
@@ -512,12 +472,18 @@ document.addEventListener('DOMContentLoaded', function () {
         draggedEmoji = this.getAttribute('data-emoji');
         this.style.opacity = '0.5';
         e.dataTransfer.effectAllowed = 'move';
+
+        // Show affordance text on empty drop zones
+        showAffordanceText();
       });
 
       newEmojiItem.addEventListener('dragend', function () {
         this.style.opacity = '1';
         draggedElement = null;
         draggedEmoji = null;
+
+        // Hide affordance text
+        hideAffordanceText();
       });
     }
 
@@ -541,7 +507,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const emoji = emojiSlot.textContent;
 
       if (emoji !== '○') {
-        document.getElementById(`position_${position}`).value = emoji;
+        const formValue = emojiNames[emoji].toLowerCase();
+        document.getElementById(`position_${position}`).value = formValue;
       } else {
         document.getElementById(`position_${position}`).value = '';
       }
@@ -590,7 +557,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function checkCompletion() {
-    const filledPositions = document.querySelectorAll('.emoji-slot').length;
     const totalPositions = dropZones.length;
     let filledCount = 0;
 
@@ -606,12 +572,6 @@ document.addEventListener('DOMContentLoaded', function () {
       submitButton.disabled = true;
     }
   }
-
-  // Submit button click
-  submitButton.addEventListener('click', function () {
-    updateFormData();
-    answerForm.submit();
-  });
 
   // Clear all button functionality
   const clearAllButton = document.getElementById('clear-all-button');
@@ -653,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Return all emojis to source
     const sourceArea = document.getElementById('emoji-source');
     const existingEmojis = sourceArea.querySelectorAll('.emoji-item');
-    const expectedEmojis = ['🍞', '🍜', '🍝', '🥔', '🍚'];
+    const expectedEmojis = Object.keys(emojiNames);
 
     // Remove existing emojis
     existingEmojis.forEach((emoji) => {
@@ -699,12 +659,18 @@ document.addEventListener('DOMContentLoaded', function () {
           draggedEmoji = this.getAttribute('data-emoji');
           this.style.opacity = '0.5';
           e.dataTransfer.effectAllowed = 'move';
+
+          // Show affordance text on empty drop zones
+          showAffordanceText();
         });
 
         newEmojiItem.addEventListener('dragend', function () {
           this.style.opacity = '1';
           draggedElement = null;
           draggedEmoji = null;
+
+          // Hide affordance text
+          hideAffordanceText();
         });
       }
 
@@ -716,5 +682,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Check completion status
     checkCompletion();
+
+    // Only hide affordance text on mobile (where selection is used)
+    if (isTouchDevice) {
+      hideAffordanceText();
+    }
   }
 });
