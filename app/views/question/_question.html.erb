@@ -1,13 +1,13 @@
 <div class="sticky top-0 z-30 bg-gradient-to-b from-yellow-50/60 via-yellow-50/40 to-transparent backdrop-blur-sm pb-8 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
   <div class="flex flex-col gap-y-2 px-6 py-4">
     <h1 class="text-5xl text-amber-900 font-black">The Question</h1>
-    <div class="text-xl text-amber-600 font-black">Drag from best to worst</div>
-    <div id="emoji-source" class="flex justify-center gap-6 pt-4">
-      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110" draggable="true" data-emoji="🍞">🍞</div>
-      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110" draggable="true" data-emoji="🍜">🍜</div>
-      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110" draggable="true" data-emoji="🍝">🍝</div>
-      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110" draggable="true" data-emoji="🥔">🥔</div>
-      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110" draggable="true" data-emoji="🍚">🍚</div>
+    <div class="text-xl text-amber-600 font-black">Rate these carbs from best to worst</div>
+    <div id="emoji-source" class="flex justify-center gap-6 pt-4 relative z-50" style="pointer-events: auto; position: relative;">
+      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation" draggable="true" data-emoji="🍞">🍞</div>
+      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation" draggable="true" data-emoji="🍜">🍜</div>
+      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation" draggable="true" data-emoji="🍝">🍝</div>
+      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation" draggable="true" data-emoji="🥔">🥔</div>
+      <div class="emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110 relative z-50 touch-manipulation" draggable="true" data-emoji="🍚">🍚</div>
     </div>
   </div>
 </div>
@@ -17,26 +17,41 @@
 
     <!-- Drop Zones -->
     <div class="mb-8">
-      <div class="flex flex-col gap-y-1 max-w-xs mx-auto">
-        <div class="drop-zone flex items-center justify-center p-3 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="1">
-          <div class="text-lg font-black text-amber-700 mr-4">1</div>
-          <div class="emoji-slot text-4xl text-amber-200">○</div>
+      <div class="flex flex-col gap-y-1 max-w-md mx-auto">
+        <div class="drop-zone flex items-center justify-between p-4 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="1">
+          <div class="flex items-center">
+            <div class="text-2xl font-black text-amber-700 mr-4">1</div>
+            <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
+            <div class="name-slot text-2xl font-black text-amber-800"></div>
+          </div>
         </div>
-        <div class="drop-zone flex items-center justify-center p-3 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="2">
-          <div class="text-lg font-black text-amber-700 mr-4">2</div>
-          <div class="emoji-slot text-4xl text-amber-200">○</div>
+        <div class="drop-zone flex items-center justify-between p-4 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="2">
+          <div class="flex items-center">
+            <div class="text-2xl font-black text-amber-700 mr-4">2</div>
+            <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
+            <div class="name-slot text-2xl font-black text-amber-800"></div>
+          </div>
         </div>
-        <div class="drop-zone flex items-center justify-center p-3 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="3">
-          <div class="text-lg font-black text-amber-700 mr-4">3</div>
-          <div class="emoji-slot text-4xl text-amber-200">○</div>
+        <div class="drop-zone flex items-center justify-between p-4 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="3">
+          <div class="flex items-center">
+            <div class="text-2xl font-black text-amber-700 mr-4">3</div>
+            <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
+            <div class="name-slot text-2xl font-black text-amber-800"></div>
+          </div>
         </div>
-        <div class="drop-zone flex items-center justify-center p-3 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="4">
-          <div class="text-lg font-black text-amber-700 mr-4">4</div>
-          <div class="emoji-slot text-4xl text-amber-200">○</div>
+        <div class="drop-zone flex items-center justify-between p-4 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="4">
+          <div class="flex items-center">
+            <div class="text-2xl font-black text-amber-700 mr-4">4</div>
+            <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
+            <div class="name-slot text-2xl font-black text-amber-800"></div>
+          </div>
         </div>
-        <div class="drop-zone flex items-center justify-center p-3 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="5">
-          <div class="text-lg font-black text-amber-700 mr-4">5</div>
-          <div class="emoji-slot text-4xl text-amber-200">○</div>
+        <div class="drop-zone flex items-center justify-between p-4 bg-amber-50/50 border-2 border-dashed border-amber-400 rounded-lg min-h-[80px] transition-all duration-200 hover:bg-amber-100/70" data-position="5">
+          <div class="flex items-center">
+            <div class="text-2xl font-black text-amber-700 mr-4">5</div>
+            <div class="emoji-slot text-4xl text-amber-200 mr-4">○</div>
+            <div class="name-slot text-2xl font-black text-amber-800"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -59,296 +74,4 @@
   </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const emojiItems = document.querySelectorAll('.emoji-item');
-  const dropZones = document.querySelectorAll('.drop-zone');
-  const submitButton = document.getElementById('submit-answer');
-  const answerForm = document.getElementById('answer-form');
-
-  let draggedElement = null;
-  let draggedEmoji = null;
-
-  // Drag start
-  emojiItems.forEach(item => {
-    item.addEventListener('dragstart', function(e) {
-      draggedElement = this;
-      draggedEmoji = this.getAttribute('data-emoji');
-      this.style.opacity = '0.5';
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    item.addEventListener('dragend', function() {
-      this.style.opacity = '1';
-      draggedElement = null;
-      draggedEmoji = null;
-    });
-  });
-
-  // Drop zone events
-  dropZones.forEach(zone => {
-    zone.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      this.classList.add('border-amber-500', 'bg-amber-100');
-    });
-
-    zone.addEventListener('dragleave', function(e) {
-      this.classList.remove('border-amber-500', 'bg-amber-100');
-    });
-
-        zone.addEventListener('drop', function(e) {
-      e.preventDefault();
-      this.classList.remove('border-amber-500', 'bg-amber-100');
-
-      if (draggedEmoji) {
-        const targetPosition = parseInt(this.getAttribute('data-position'));
-        const draggedFromSource = draggedElement && draggedElement.classList.contains('emoji-item');
-        const targetSlot = this.querySelector('.emoji-slot');
-        const targetOccupied = targetSlot.textContent !== '○';
-
-        // If target is occupied, swap the emojis
-        if (targetOccupied) {
-          const targetEmoji = targetSlot.textContent;
-
-          if (draggedFromSource) {
-            // Dragging from source to occupied position - swap with target
-            targetSlot.textContent = draggedEmoji;
-            targetSlot.classList.remove('text-gray-300');
-            targetSlot.classList.add('text-black');
-            targetSlot.setAttribute('draggable', 'true');
-            targetSlot.classList.add('cursor-grab', 'active:cursor-grabbing');
-
-            // Apply ranking background color
-            applyRankingBackground(this, targetPosition);
-
-            // Add drag events to the placed emoji
-            targetSlot.addEventListener('dragstart', function(e) {
-              draggedElement = this;
-              draggedEmoji = this.textContent;
-              this.style.opacity = '0.5';
-              e.dataTransfer.effectAllowed = 'move';
-            });
-
-            targetSlot.addEventListener('dragend', function() {
-              this.style.opacity = '1';
-              draggedElement = null;
-              draggedEmoji = null;
-            });
-
-            // Return the target emoji to source
-            returnEmojiToSource(targetEmoji);
-            removeEmojiFromSource(draggedEmoji);
-                    } else {
-            // Dragging between positions - simple swap
-            const sourcePosition = findEmojiPosition(draggedEmoji);
-            const sourceSlot = document.querySelector(`[data-position="${sourcePosition}"] .emoji-slot`);
-
-            // Swap the emojis
-            sourceSlot.textContent = targetEmoji;
-            targetSlot.textContent = draggedEmoji;
-
-            // Update styling for both slots
-            sourceSlot.classList.remove('text-stone-300');
-            sourceSlot.classList.add('text-black', 'cursor-grab', 'active:cursor-grabbing');
-            sourceSlot.setAttribute('draggable', 'true');
-
-            targetSlot.classList.remove('text-stone-300');
-            targetSlot.classList.add('text-black', 'cursor-grab', 'active:cursor-grabbing');
-            targetSlot.setAttribute('draggable', 'true');
-
-            // Apply ranking background colors
-            const sourceZone = document.querySelector(`[data-position="${sourcePosition}"]`);
-            const targetZone = document.querySelector(`[data-position="${targetPosition}"]`);
-            applyRankingBackground(sourceZone, sourcePosition);
-            applyRankingBackground(targetZone, targetPosition);
-
-            // Update drag events for both slots
-            updateSlotDragEvents(sourceSlot);
-            updateSlotDragEvents(targetSlot);
-          }
-                } else {
-          // Target is empty - place the emoji
-          targetSlot.textContent = draggedEmoji;
-          targetSlot.classList.remove('text-gray-300');
-          targetSlot.classList.add('text-black');
-          targetSlot.setAttribute('draggable', 'true');
-          targetSlot.classList.add('cursor-grab', 'active:cursor-grabbing');
-
-          // Apply ranking background color
-          applyRankingBackground(this, targetPosition);
-
-          // Add drag events to the placed emoji
-          updateSlotDragEvents(targetSlot);
-
-          // Remove from source if it came from source
-          if (draggedFromSource) {
-            removeEmojiFromSource(draggedEmoji);
-          } else {
-            // Remove from its previous position to prevent duplicates
-            const sourcePosition = findEmojiPosition(draggedEmoji);
-            if (sourcePosition && sourcePosition !== targetPosition) {
-              const sourceSlot = document.querySelector(`[data-position="${sourcePosition}"] .emoji-slot`);
-              sourceSlot.textContent = '○';
-              sourceSlot.classList.remove('text-black', 'cursor-grab', 'active:cursor-grabbing');
-              sourceSlot.classList.add('text-amber-200');
-              sourceSlot.removeAttribute('draggable');
-
-              // Remove ranking background color
-              const sourceZone = document.querySelector(`[data-position="${sourcePosition}"]`);
-              removeRankingBackground(sourceZone);
-            }
-          }
-        }
-
-        // Update form data
-        updateFormData();
-
-        // Check if all positions are filled
-        checkCompletion();
-      }
-    });
-  });
-
-  function returnEmojiToSource(emoji) {
-    const sourceArea = document.getElementById('emoji-source');
-    const newEmojiItem = document.createElement('div');
-    newEmojiItem.className = 'emoji-item text-5xl cursor-grab active:cursor-grabbing transition-transform duration-200 hover:scale-110';
-    newEmojiItem.setAttribute('draggable', 'true');
-    newEmojiItem.setAttribute('data-emoji', emoji);
-    newEmojiItem.textContent = emoji;
-
-    // Add drag events to new element
-    newEmojiItem.addEventListener('dragstart', function(e) {
-      draggedElement = this;
-      draggedEmoji = this.getAttribute('data-emoji');
-      this.style.opacity = '0.5';
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    newEmojiItem.addEventListener('dragend', function() {
-      this.style.opacity = '1';
-      draggedElement = null;
-      draggedEmoji = null;
-    });
-
-    sourceArea.appendChild(newEmojiItem);
-  }
-
-  function removeEmojiFromSource(emoji) {
-    const emojiElements = document.querySelectorAll('.emoji-item');
-    emojiElements.forEach(element => {
-      if (element.getAttribute('data-emoji') === emoji) {
-        element.remove();
-        return;
-      }
-    });
-  }
-
-  function updateFormData() {
-    dropZones.forEach(zone => {
-      const position = zone.getAttribute('data-position');
-      const emojiSlot = zone.querySelector('.emoji-slot');
-      const emoji = emojiSlot.textContent;
-
-      if (emoji !== '⬜') {
-        document.getElementById(`position_${position}`).value = emoji;
-      } else {
-        document.getElementById(`position_${position}`).value = '';
-      }
-    });
-  }
-
-    function findEmojiPosition(emoji) {
-    const slots = document.querySelectorAll('.emoji-slot');
-    for (let i = 0; i < slots.length; i++) {
-      if (slots[i].textContent === emoji) {
-        return i + 1;
-      }
-    }
-    return null;
-  }
-
-    function updateSlotDragEvents(slot) {
-    // Remove existing event listeners by cloning the element
-    const newSlot = slot.cloneNode(true);
-    slot.parentNode.replaceChild(newSlot, slot);
-
-    // Ensure opacity is reset
-    newSlot.style.opacity = '1';
-
-    // Add new drag events
-    newSlot.addEventListener('dragstart', function(e) {
-      draggedElement = this;
-      draggedEmoji = this.textContent;
-      this.style.opacity = '0.5';
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    newSlot.addEventListener('dragend', function() {
-      this.style.opacity = '1';
-      draggedElement = null;
-      draggedEmoji = null;
-    });
-  }
-
-  function applyRankingBackground(zone, position) {
-    // Remove any existing ranking borders
-    removeRankingBackground(zone);
-
-    // Change border style from dashed to solid
-    zone.classList.remove('border-dashed');
-    zone.classList.add('border-solid');
-
-    // Apply ranking border based on position
-    switch(position) {
-      case 1:
-        zone.classList.add('border-yellow-300'); // Lightest
-        break;
-      case 2:
-        zone.classList.add('border-yellow-400'); // Light
-        break;
-      case 3:
-        zone.classList.add('border-yellow-500'); // Medium
-        break;
-      case 4:
-        zone.classList.add('border-yellow-600'); // Dark
-        break;
-      case 5:
-        zone.classList.add('border-yellow-700'); // Darkest
-        break;
-    }
-  }
-
-  function removeRankingBackground(zone) {
-    zone.classList.remove('border-yellow-300', 'border-yellow-400', 'border-yellow-500', 'border-yellow-600', 'border-yellow-700');
-    // Change border style back to dashed
-    zone.classList.remove('border-solid');
-    zone.classList.add('border-dashed');
-  }
-
-  function checkCompletion() {
-    const filledPositions = document.querySelectorAll('.emoji-slot').length;
-    const totalPositions = dropZones.length;
-    let filledCount = 0;
-
-    document.querySelectorAll('.emoji-slot').forEach(slot => {
-      if (slot.textContent !== '○') {
-        filledCount++;
-      }
-    });
-
-    if (filledCount === totalPositions) {
-      submitButton.disabled = false;
-    } else {
-      submitButton.disabled = true;
-    }
-  }
-
-  // Submit button click
-  submitButton.addEventListener('click', function() {
-    updateFormData();
-    answerForm.submit();
-  });
-});
-</script>
+<%= javascript_include_tag 'drag_and_drop_vanilla' %>
