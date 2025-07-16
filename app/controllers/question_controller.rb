@@ -7,10 +7,22 @@ class QuestionController < ApplicationController
 
     if @ranking.save
       redirect_to results_path
+    else
+      redirect_to ask_path, alert: 'Something went wrong. Please try again.'
     end
   end
 
   def results
+    locals = {
+      total_answers: Ranking.count,
+      bread: Total.bread,
+      noodles: Total.noodles,
+      pasta: Total.pasta,
+      potato: Total.potato,
+      rice: Total.rice
+    }
+
+    render 'results', locals:
   end
 
   private

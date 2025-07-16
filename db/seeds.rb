@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+puts 'Creating totals...'
+Total.create(carb: 'bread')
+Total.create(carb: 'noodles')
+Total.create(carb: 'pasta')
+Total.create(carb: 'potato')
+Total.create(carb: 'rice')
