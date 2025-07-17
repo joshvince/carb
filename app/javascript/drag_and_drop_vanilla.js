@@ -7,13 +7,30 @@ document.addEventListener('DOMContentLoaded', function () {
   let draggedEmoji = null;
 
   // Emoji to name mapping
-  const emojiNames = {
+  let emojiNames = {
     '🍞': 'Bread',
     '🍜': 'Noodles',
     '🍝': 'Pasta',
     '🥔': 'Potato',
     '🍚': 'Rice',
   };
+
+  const enspuddificationCookie = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('enspuddification='))
+    ?.split('=')[1];
+
+  if (enspuddificationCookie === 'true') {
+    emojiNames = {
+      '🥔': 'Potato',
+    };
+
+    document.querySelectorAll('.emoji-item').forEach((emoji) => {
+      emoji.dataset.emoji = '🥔';
+    });
+
+    document.querySelector('input[name="enspuddification"]').value = true;
+  }
 
   // Detect if device supports touch
   const isTouchDevice =
@@ -557,6 +574,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function checkCompletion() {
+    if (enspuddificationCookie === 'true') {
+      submitButton.disabled = false;
+      return;
+    }
+
     const totalPositions = dropZones.length;
     let filledCount = 0;
 

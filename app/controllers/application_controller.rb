@@ -7,9 +7,14 @@ class ApplicationController < ActionController::Base
   end
 
   def answer
+    if params[:enspuddification] == 'true'
+      return redirect_to results_path
+    end
+
     @ranking = Ranking.new(ip: request.remote_ip, **params_to_attributes)
 
     if @ranking.save
+      request.flash[:newsflash] = 'true'
       redirect_to results_path
     else
       redirect_to ask_path, alert: 'Something went wrong. Please try again.'
@@ -36,10 +41,10 @@ class ApplicationController < ActionController::Base
   private
 
   def ranking_params
-    params.permit(:position_1, :position_2, :position_3, :position_4, :position_5)
+    params.permit(:position_1, :position_2, :position_3, :position_4, :position_5, :enspuddification)
   end
 
   def params_to_attributes
-    ranking_params.to_h.map { |key, value| [value, key.split('_').last.to_i] }.to_h
+    ranking_params.except(:enspuddification).to_h.map { |key, value| [value, key.split('_').last.to_i] }.to_h
   end
 end

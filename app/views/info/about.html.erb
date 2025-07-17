@@ -1,16 +1,35 @@
 <div class="flex flex-col w-screen">
   <div class="sticky top-0 z-10 bg-gradient-to-b from-yellow-50/60 via-yellow-50/40 to-transparent backdrop-blur-sm pb-6 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
-    <div class="flex flex-col gap-y-2 px-6 md:px-12 py-4 mt-8">
+    <div class="flex flex-col gap-y-2 px-6 md:px-12 py-4 mt-12">
       <h1 class="text-4xl lg:text-5xl text-amber-900 font-black">The ISOCRA</h1>
       <div class="text-xl text-amber-600 font-black">The Independent Society of Carb Rankers</div>
     </div>
   </div>
   <div class="w-full container mx-auto">
     <div class="flex flex-col gap-y-4 p-6">
-      <h2 class="text-4xl text-amber-800 font-black">For centuries</h2>
-      <div class="text-lg text-amber-950 max-w-prose">
-        Humanity has cultivated carbohydrate-rich and starchy foods into the basis of dishes and cuisines.
+      <h2 class="text-4xl text-amber-800 font-black">About us</h2>
+      <div class="text-lg text-amber-950 max-w-prose mb-4">
+        The Independent Society of Carb Rankers, or ISOCRA, is a proud and historied organisation.
+        Although our origins lie in 404BCE with our founder Socrates, the society works tirelessly to this day to achieve the mission laid out
+        by the Philosophical work that established the foundation of the Society. It is a mission which has remained unchanged to this day:
       </div>
+      <div class="text-xl text-amber-700 max-w-prose mb-4 italic">
+        "To Rank Carbs"
+      </div>
+      <div class="text-lg text-amber-950 max-w-prose mb-4">
+        ISOCRA holds annual conferences each year where chairmen are elected by the
+        council. Our current Chair, Steven Gubbins, has been in post since 1998 since he succeeded
+        Edgar Gubbins.
+      </div>
+      <div class="text-lg text-amber-950 max-w-prose">
+        ISOCRA archives currently consist of over sixteen million answers to The Carb Question. If you'd
+        like to request a copy of any of the results, please submit a freedom of information request.
+      </div>
+    </div>
+    <a id="press-release" class="block mb-48 hidden enspuddification"></a>
+    <%= render partial: 'info/press_release' %>
+    <div class="h-24">
+      <%= link_to 'Answer The Question', ask_path(anchor: 'question'), class: 'ml-6 px-8 py-4 bg-amber-600 text-white font-bold text-xl rounded-lg hover:bg-amber-700 transition-colors duration-200' %>
     </div>
   </div>
 </div>
