@@ -14,8 +14,6 @@ function enspuddify() {
     document.querySelectorAll('.emoji-item').forEach((emoji) => {
       emoji.textContent = '🥔';
     });
-  } else {
-    document.querySelector('a#question').remove();
   }
 }
 

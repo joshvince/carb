@@ -1,24 +1,10 @@
-# README
+# ISOCRA website
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This website is a project I carried out for the Independent Society of Carb Rankers.
 
-Things you may want to cover:
+The site allows users to vote on which carb is best.
 
-* Ruby version
+It is a Rails app, and is monumentally stupid. I created it in a couple of days for a laugh. If you're someone reading this in a professional capacity, I should probably
+point out that this was just a toy project and might contain Cursor-generated monstrosities.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Cast your vote now at https://isocra.org
