@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # Allow browsers that support importmaps
+  allow_browser versions: { safari: 16.4, firefox: 108, ie: false, edge: 89, chrome: 89 }
+
+  def root
+    if cookies[:enspuddification] == 'true'
+      redirect_to results_path
+    else
+      redirect_to ask_path
+    end
+  end
 
   def ask
     render 'question/ask'
@@ -15,6 +23,9 @@ class ApplicationController < ActionController::Base
 
     if @ranking.save
       request.flash[:newsflash] = 'true'
+      # Set cookie with share text
+      share_text = generate_share_text(@ranking)
+      cookies[:share_text] = { value: share_text, expires: 1.hour.from_now }
       redirect_to results_path
     else
       redirect_to ask_path, alert: 'Something went wrong. Please try again.'
@@ -35,6 +46,9 @@ class ApplicationController < ActionController::Base
   end
 
   def about
+    enspuddification = cookies[:enspuddification] == 'true'
+    @question_path = enspuddification ? ask_path(anchor: 'question') : ask_path
+
     render 'info/about'
   end
 
@@ -46,5 +60,20 @@ class ApplicationController < ActionController::Base
 
   def params_to_attributes
     ranking_params.except(:enspuddification).to_h.map { |key, value| [value, key.split('_').last.to_i] }.to_h
+  end
+
+  def generate_share_text(ranking)
+    # Create ranking array with position and carb name
+    ranking_array = Array.new(5, '')
+
+    # Build the ranking array with carb names instead of emojis
+    ranking.attributes.slice('bread', 'noodles', 'pasta', 'potato', 'rice').each do |carb, position|
+      if position && position > 0 && position <= 5
+        ranking_array[position - 1] = carb
+      end
+    end
+
+    # Return just the array as JSON
+    ranking_array.to_json
   end
 end

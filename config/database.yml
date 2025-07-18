@@ -19,7 +19,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
   database: carb_development
@@ -82,17 +81,6 @@ production:
   primary: &primary_production
     <<: *default
     database: carb_production
-    username: carb
-    password: <%= ENV["CARB_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: carb_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: carb_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: carb_production_cable
-    migrations_paths: db/cable_migrate
+    username: postgres
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    url: <%= ENV["POSTGRES_DATABASE_URL"] %>
