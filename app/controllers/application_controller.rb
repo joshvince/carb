@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # Allow browsers that support importmaps
+  allow_browser versions: { safari: 16.4, firefox: 108, ie: false, edge: 89, chrome: 89 }
+
+  def root
+    if cookies[:enspuddification] == 'true'
+      redirect_to results_path
+    else
+      redirect_to ask_path
+    end
+  end
 
   def ask
     render 'question/ask'
