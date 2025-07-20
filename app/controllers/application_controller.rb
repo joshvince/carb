@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: { safari: 16.4, firefox: 108, ie: false, edge: 89, chrome: 89 }
 
   def root
-    if cookies[:enspuddification] == 'true'
+    if cookies[:enspuddification] == "true"
       redirect_to results_path
     else
       redirect_to ask_path
@@ -11,24 +11,24 @@ class ApplicationController < ActionController::Base
   end
 
   def ask
-    render 'question/ask'
+    render "question/ask"
   end
 
   def answer
-    if params[:enspuddification] == 'true'
+    if params[:enspuddification] == "true"
       return redirect_to results_path
     end
 
     @ranking = Ranking.new(ip: request.remote_ip, **params_to_attributes)
 
     if @ranking.save
-      request.flash[:newsflash] = 'true'
+      request.flash[:newsflash] = "true"
       # Set cookie with share text
       share_text = generate_share_text(@ranking)
-      cookies[:share_text] = { value: share_text, expires: 1.hour.from_now }
+      cookies[:share_text] = { value: share_text }
       redirect_to results_path
     else
-      redirect_to ask_path, alert: 'Something went wrong. Please try again.'
+      redirect_to ask_path, alert: "Something went wrong. Please try again."
     end
   end
 
@@ -42,14 +42,14 @@ class ApplicationController < ActionController::Base
       rice: Total.rice
     }
 
-    render 'question/results', locals:
+    render "question/results", locals:
   end
 
   def about
-    enspuddification = cookies[:enspuddification] == 'true'
-    @question_path = enspuddification ? ask_path(anchor: 'question') : ask_path
+    enspuddification = cookies[:enspuddification] == "true"
+    @question_path = enspuddification ? ask_path(anchor: "question") : ask_path
 
-    render 'info/about'
+    render "info/about"
   end
 
   private
@@ -59,15 +59,15 @@ class ApplicationController < ActionController::Base
   end
 
   def params_to_attributes
-    ranking_params.except(:enspuddification).to_h.map { |key, value| [value, key.split('_').last.to_i] }.to_h
+    ranking_params.except(:enspuddification).to_h.map { |key, value| [ value, key.split("_").last.to_i ] }.to_h
   end
 
   def generate_share_text(ranking)
     # Create ranking array with position and carb name
-    ranking_array = Array.new(5, '')
+    ranking_array = Array.new(5, "")
 
     # Build the ranking array with carb names instead of emojis
-    ranking.attributes.slice('bread', 'noodles', 'pasta', 'potato', 'rice').each do |carb, position|
+    ranking.attributes.slice("bread", "noodles", "pasta", "potato", "rice").each do |carb, position|
       if position && position > 0 && position <= 5
         ranking_array[position - 1] = carb
       end
