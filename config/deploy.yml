@@ -86,41 +86,10 @@ builder:
 # Use a different ssh user than root
 # ssh:
 #   user: app
-accessories:
-  db:
-    image: postgres:16
-    host: 65.109.131.9
-    port: 5432
-    env:
-      clear:
-        POSTGRES_USER: 'postgres'
-        POSTGRES_DB: 'carb_production'
-      secret:
-        - POSTGRES_PASSWORD
-    files:
-      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-    directories:
-      - data:/var/lib/postgresql/data
-# Use accessory services (secrets come from .kamal/secrets).
+
 # accessories:
+#   NOTE: the database this project uses is the shared one that comes from
+#   the toy service handled by the joshvince.site project.
+#   To initialize it you will need to create the carb_production database
 #   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+#     ### uses the josh-db service from the joshvince.site project
