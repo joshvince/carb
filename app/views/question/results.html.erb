@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             await navigator.share({
               title: 'My Carb Ranking',
               text: shareText,
-              url: 'https://isocra.org'
+              url: 'https://isocra.joshvince.site'
             });
             return; // Successfully shared via native UI
           } catch (err) {
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const emojiRanking = rankingArray.map(carb => carbToEmoji[carb] || carb).join('');
 
     // Build the share text
-    return `My answer to The Carb Question is ${emojiRanking}. Check it out at https://isocra.org`;
+    return `My answer to The Carb Question is ${emojiRanking}. Check it out at https://isocra.joshvince.site`;
   }
 });
 </script>
