@@ -72,7 +72,7 @@ asset_path: /rails/public/assets
 builder:
   arch: amd64
   args:
-    RUBY_VERSION: 3.4.5
+    RUBY_VERSION: 4.0.9
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
   #
