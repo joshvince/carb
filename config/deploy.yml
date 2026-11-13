@@ -76,9 +76,8 @@ builder:
   # secrets:
   #   - GITHUB_TOKEN
   #   - RAILS_MASTER_KEY
-# Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  keys: ["~/.ssh/id_ed25519_toy_projects"]
 
 # accessories:
 #   NOTE: the database this project uses is the shared one that comes from
