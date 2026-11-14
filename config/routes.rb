@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # ISOCRA moved to the Veni Vidi Vincey labs. The old host sends people there.
+  constraints host: "isocra.joshvince.site" do
+    get "(*path)", to: redirect { |_, request| "https://isocra.venividivincey.uk#{request.fullpath}" }
+  end
+
   root "application#root"
   get "ask", to: "application#ask"
   post "answer", to: "application#answer"
