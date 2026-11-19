@@ -1,6 +1,10 @@
 #!/bin/sh
 # Deploys to production. Caesar's Deploy playbook runs this in the Mac's main checkout.
+# With vinceworks installed, the image is built on the Mac mini, so this Mac's Docker stays small.
 set -e
 cd "$(dirname "$0")/.."
 bin/bundle install
+if command -v vinceworks >/dev/null 2>&1; then
+  exec vinceworks remote-docker bin/kamal deploy "$@"
+fi
 exec bin/kamal deploy "$@"
