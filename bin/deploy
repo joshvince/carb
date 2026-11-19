@@ -1,0 +1,6 @@
+#!/bin/sh
+# Deploys to production. Caesar's Deploy playbook runs this in the Mac's main checkout.
+set -e
+cd "$(dirname "$0")/.."
+bin/bundle install
+exec bin/kamal deploy "$@"
